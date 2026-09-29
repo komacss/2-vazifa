@@ -1,34 +1,48 @@
-class BankHisobi:
-    def __init__(self, egasi, balans, karta_raqami):
-        self.egasi = egasi
-        self._balans = balans
-        self.__karta_raqami = karta_raqami
+class BankAccount:
+    def __init__(self, owner, balance, card_number):
+        self.owner = owner
+        self.balance = balance
+        self.__card_number = card_number
 
     @property
-    def balans(self):
-        return self._balans
+    def balance(self):
+        return self._balance
 
-    @balans.setter
-    def balans(self, yangi_balans):
-        if yangi_balans >= 0:
-            self._balans = yangi_balans
-        else:
-            print("Balans manfiy bo'lishi mumkin emas")
+    @balance.setter
+    def balance(self, qiymat):
+        if qiymat < 0:
+            raise ValueError("Balans manfiy bo'lmasligi kerak!")
+        self._balance = qiymat
 
     def __str__(self):
-        return f"Egasi: {self.egasi}\nBalans: {self._balans}"
+        return f"Hisob egasi: {self.owner}, balans: {self._balance}"
 
     def __repr__(self):
-        return f"BankHisobi('{self.egasi}', {self._balans})"
+        return f"BankAccount(owner='{self.owner}', balance={self._balance}, card_number='{self.__card_number}')"
 
 
-hisob_1 = BankHisobi("Muhiddin Solijonov", 5000000, "1234 5678 5424 7985")
-hisob_2 = BankHisobi("Sobirov Sobir", 440000, "7866 6744 7968 4586")
+hisob1 = BankAccount("Ali", 1000, "8600123412341234")
+hisob2 = BankAccount("Vali", 2500, "8600987698769876")
 
-print(hisob_1.balans)
+print(hisob1)
+print(hisob2)
+print(repr(hisob1))
+print(repr(hisob2))
 
-yangi_balans = int(input("Yangi balans: "))
-hisob_1.balans = yangi_balans
+hisob1.balance = 1500
+print(hisob1.balance)
 
-print(hisob_1)
-print(repr(hisob_1))
+hisob2.balance = 0
+print(hisob2.balance)
+
+try:
+    hisob1.balance = -200
+except ValueError as xato:
+    print("Xato:", xato)
+
+print(hisob1)
+
+try:
+    print(hisob2.__card_number)
+except AttributeError as xato:
+    print("Xato:", xato)

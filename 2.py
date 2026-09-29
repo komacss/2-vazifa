@@ -1,30 +1,51 @@
-class Xodim:
-    def __init__(self, ism, maosh, xodim_id):
-        self.ism = ism
-        self._maosh = maosh
-        self.__xodim_id = xodim_id
+class Employee:
+    def __init__(self, name, salary, employee_id):
+        self.name = name
+        self.salary = salary
+        self.__employee_id = employee_id
 
     @property
-    def maosh(self):
-        return self._maosh
+    def salary(self):
+        return self._salary
 
-    @maosh.setter
-    def maosh(self, yangi_maosh):
-        if yangi_maosh > 0:
-            self._maosh = yangi_maosh
-            print("Maosh muvaffaqiyatli o'zgartirildi")
-        else:
-            print("Xato: maosh 0 dan katta bo'lishi kerak")
+    @salary.setter
+    def salary(self, qiymat):
+        if qiymat < 0:
+            raise ValueError("Maosh 0 dan kichik bo'lmasligi kerak!")
+        self._salary = qiymat
 
     def __str__(self):
-        return f"ID: {self.__xodim_id}, Ism: {self.ism}"
+        return f"Xodim: {self.name}, maosh: {self._salary}"
+
+    def __repr__(self):
+        return f"Employee(name='{self.name}', salary={self._salary}, employee_id={self.__employee_id})"
 
 
-xodim_1 = Xodim(ism="Sobir", maosh=5000, xodim_id=1)
+xodim1 = Employee("Ali", 5000, 101)
+xodim2 = Employee("Vali", 7000, 102)
+xodim3 = Employee("Sardor", 6000, 103)
 
-print(xodim_1.maosh)
+print(xodim1)
+print(xodim2)
+print(xodim3)
 
-yangi_maosh = int(input("Yangi maosh: "))
-xodim_1.maosh = yangi_maosh
+print(repr(xodim1))
+print(repr(xodim2))
+print(repr(xodim3))
 
-print(xodim_1)
+xodim1.name = "Aliyev"
+print(xodim1.name)
+
+xodim2.salary = 8000
+print(xodim2.salary)
+try:
+    xodim2.salary = -100
+except ValueError as xato:
+    print("Xato:", xato)
+
+try:
+    print(xodim3.__employee_id)
+except AttributeError as xato:
+    print("Xato:", xato)
+
+print(xodim3._Employee__employee_id)

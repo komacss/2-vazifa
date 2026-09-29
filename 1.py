@@ -1,53 +1,56 @@
-class Foydalanuvchi:
-    def __init__(self, ism, yosh, parol):
-        self.ism = ism
-        self._yosh = yosh
-        self.__parol = parol
+class User:
+    def __init__(self, name, age, password):
+        self.name = name
+        self.age = age
+        self.password = password
 
     @property
-    def yosh(self):
-        return self._yosh
+    def age(self):
+        return self._age
 
-    @yosh.setter
-    def yosh(self, yangi_yosh):
-        if yangi_yosh >= 0:
-            self._yosh = yangi_yosh
-            print("Yosh o'zgartirildi")
-        else:
-            print("Yosh 0 dan kichik bo'lishi mumkin emas")
+    @age.setter
+    def age(self, qiymat):
+        if qiymat < 0:
+            raise ValueError("Yosh 0 dan kichik bo'lmasligi kerak!")
+        self._age = qiymat
 
     @property
-    def parol(self):
-        return self.__parol
+    def password(self):
+        return self.__password
 
-    @parol.setter
-    def parol(self, parollar):
-        eski_parol, yangi_parol = parollar
-
-        if len(yangi_parol) >= 6 and self.__parol == eski_parol:
-            self.__parol = yangi_parol
-            print("Parol almashtirildi")
-        else:
-            print("Xatolik")
+    @password.setter
+    def password(self, qiymat):
+        if len(qiymat) < 6:
+            raise ValueError("Parol kamida 6 ta belgidan iborat bo'lishi kerak!")
+        self.__password = qiymat
 
     def __str__(self):
-        return f"Ism: {self.ism}, Yosh: {self.yosh}"
+        return f"Foydalanuvchi: {self.name}, yoshi: {self._age}"
 
     def __repr__(self):
-        return f"Foydalanuvchi('{self.ism}', {self.yosh})"
+        return f"User(name='{self.name}', age={self._age})"
 
 
-foydalanuvchi_1 = Foydalanuvchi("Sobir", 19, "12345678")
-foydalanuvchi_2 = Foydalanuvchi("Ali", 20, "5432105")
+user1 = User("Ali", 20, "ali12345")
+user2 = User("Vali", 25, "vali7890")
 
-print(foydalanuvchi_1)
-print(repr(foydalanuvchi_1))
-print(foydalanuvchi_1.yosh)
+print(user1)
+print(user2)
+print(repr(user1))
 
-yangi_yosh = int(input("Yangi yoshni kiriting: "))
-foydalanuvchi_1.yosh = yangi_yosh
+user1.name = "Aliyev"
+print(user1.name)
 
-eski_parol = input("Eski parolni kiriting: ")
-yangi_parol = input("Yangi parolni kiriting: ")
+user2.age = 30
+print(user2.age)
+try:
+    user2.age = -5
+except ValueError as xato:
+    print("Xato:", xato)
 
-foydalanuvchi_1.parol = eski_parol, yangi_parol
+user1.password = "yangi_parol"
+print(user1.password)
+try:
+    user1.password = "123"
+except ValueError as xato:
+    print("Xato:", xato)
